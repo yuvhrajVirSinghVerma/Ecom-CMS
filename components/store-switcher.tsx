@@ -65,6 +65,7 @@ export default function StoreSwitcher({
                                      <CommandItem
                                     className="text-sm"
                                     onSelect={()=>onStoreSelect(store)}
+                                    key={store.label}
                                     >
                                     <StoreIcon className="mr-2 h-4 w-4"/>
                                     {store.label}
