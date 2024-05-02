@@ -64,7 +64,8 @@ export async function POST(
             }
         }
     })
-
+    
+    console.log("`${process.env.FRONTEND_STORE_URL}/cart?success=1` ",`${process.env.FRONTEND_STORE_URL}/cart?success=1`)
     const session=await stripe.checkout.sessions.create({
         line_items,
         mode:'payment',
@@ -78,6 +79,7 @@ export async function POST(
             orderId:order.id
         }
     })
+    console.log("ress after+++++++++++++++++++++++++")
 
     return NextResponse.json({url:session.url},{
         headers:corsHeader

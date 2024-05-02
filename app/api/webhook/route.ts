@@ -12,6 +12,7 @@ export async function POST(req:Request){
     const body=await req.text();
     const signature=headers().get('Stripe-Signature') as string
 
+    console.log("body ",body," signature ",signature)
     let event:Stripe.Event
 
     try{
@@ -35,7 +36,9 @@ export async function POST(req:Request){
 
     const addressString=addressComponents.filter((c)=>c!==null).join(', ')
 
+    console.log("event.type ",event.type)
     if(event.type==="checkout.session.completed"){
+       try {
         const order=await prismadb.order.update({
             where:{
                 id:session?.metadata?.orderId
@@ -62,6 +65,9 @@ export async function POST(req:Request){
                 isArchived:true
             }
         })
+       } catch (error) {
+        console.log("error event ",error)
+       }
     }
 
     return new NextResponse(null,{status:200})
